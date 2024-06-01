@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+<h1>Books Issued User-wise</h1>
+<a href="/admin"><input type="submit" value="Back"></a>
+<ul>
+    {% for username, books_issued in issued_books.items() %}
+    <li>USER: {{ username }}</li>
+    <li></li>
+    <ul>
+        {% for issue in books_issued %}
+        <li>BOOK ID: {{ issue.id }}</li>
+        <li>BOOK NAME: {{ issue.name }} </li>
+        <li>BOOK AUTHOR: {{ issue.author }}</li>
+        <li>BOOK CONTENT: {{ issue.content }}</li>
+        <li>ISSUE DATE: {{ issue.date_issue }}</li>
+        <li>RETURN DATE: {{ issue.return_date }}</li>
+        <form action="/revoke_access/{{ issue.id }}" method="POST">
+            <input type="submit" value="Revoke Access">
+        </form>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</ul>
+{% endblock content %}

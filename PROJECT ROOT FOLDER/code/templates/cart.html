@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+<h1>Welcome to Cart </h1>
+<a href="/logout"><input type="submit" value="Logout"></a>
+<a href="/"><input type="submit" value="Home"></a>
+<a href="/issues"><input type="submit" value="Issue"></a>
+{% if carts | length==0 %}
+<h2>Cart is empty</h2>
+{% else %}
+{% for cart in carts %}
+{% for book in books %}
+{% if cart.book_id == book.id %}
+<h3>BOOK NAME: {{book.name}}</h3>
+<p>BOOK CONTENT: {{book.content}}</p>
+<p>BOOK AUTHOR: {{book.author}}</p>
+<p>Quantity: {{cart.quantity}}</p>
+<a href="/delete_from_cart/{{cart.id}}"><input type="submit" value="Delete from cart"></a>
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% endblock content %}

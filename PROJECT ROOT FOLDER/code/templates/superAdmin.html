@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{{url_for('static' , filename='reg.css')}}">
+{% endblock link_css %}
+
+{% block content %}
+<h2>ADMIN REGISTER PORTAL</h2>
+<a class="btn-white" href="/logout" value="Logout">Logout</a>
+<form action="/admin_register" method="POST">
+    <label class="label" for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    <label class="label" for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone">
+    <label class="label" for="email">Email:</label>
+    <input type="email" name="email" id="email">
+    <label class="label" for="password">Password:</label>
+    <input type="password" name="password" id="password">
+    <label class="label" for="address">Address:</label>
+    <input type="text" name="address" id="address">
+    <input class="button" type="submit" value="Register">
+</form>
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+
+<a href="/admin"><input type="submit" value="Back"></a>
+<div class="container">
+    <h1>Issued Books History</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Book Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for issued_book in issued_books %}
+            <tr>
+                <td>{{ issued_book.user_name }}</td>
+                <td>{{ issued_book.book_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

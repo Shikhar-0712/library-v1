@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<h1>Search Results</h1>
+<a class="btn-white" href="/" value="Home">Home</a>
+<h3>Showing results for '{{ search_query }}' (Search Type: {{ search_type }})</h3>
+<br>
+{% if books %}
+<h3>
+    <ul>
+        {% for book in books %}
+        <li>{{ book.name }} by {{ book.author }}</li>
+        <li>Content: {{ book.content }}</li>
+        <li>Section: {{ book.section.name }}</li>
+        <hr>
+        {% endfor %}
+    </ul>
+</h3>
+{% else %}
+<p>No results found.</p>
+{% endif %}
+{% endblock content %}

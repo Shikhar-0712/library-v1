@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{{url_for('static' , filename='style.css')}}">
+{% endblock link_css %}
+
+{% block content %}
+<div>
+    {% if session.get('user') %}
+    <h1>LIBRARY MANAGEMENT SYSTEM</h1>
+    <h1>Welcome: {{ session.get('user')['name'] }}</h1>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a class="btn-white" href="/logout">Logout</a></li>
+            <li><a class="btn-white" href="/cart">Cart</a></li>
+            <li><a class="btn-white" href="/my_issues">My Issues</a></li>
+            <li><a class="btn-white" href="/">Home</a></li>
+        </ul>
+        <form class="search-form" action="/search" method="GET" role="search">
+            <div class="input-group">
+                <input class="form-control me-2" name="search_query" type="search" placeholder="Search"
+                    aria-label="Search">
+                <select class="form-select" name="search_type">
+                    <option value="author">Author</option>
+                    <option value="section">Section</option>
+                    <option value="name">Book Name</option>
+                    <option value="content">Content</option>
+                    <option value="rating">Rating</option>
+                </select>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </form>
+    </nav>
+    {% else %}
+    <h1>LIBRARY MANAGEMENT SYSTEM</h1>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a class="btn-white" href="/login">Login</a></li>
+            <li><a class="btn-white" href="/register">Register</a></li>
+        </ul>
+        <form class="search-form" action="/" method="GET" role="search">
+            <input class="form-control me-2" name="search_query" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </nav>
+    {% endif %}
+    {% for section in sections %}
+    <h2> SECTION: {{section.name}}</h2>
+    <div class="product-container">
+        {% for book in section.books %}
+        <div class="product-cart">
+            <h3>{{book.name}}</h3>
+            {% if session.get('user') %}
+            {% if book.quantity > 0 %}
+            <form action="/add_to_cart" method="POST">
+                <input type="hidden" name="book_id" value="{{book.id}}">
+                <input type="submit" value="Add to cart">
+                <input type="number" name="quantity" value="1" min="1" max="1" readonly>
+            </form>
+            {% else %}
+            <p>Out of Stock</p>
+            {% endif %}
+            {% else %}
+            <a href="/login"><input type="submit" value="Add to cart"></a>
+            <input type="number" name="quantity" value="1" min="1" max="1" readonly>
+            {% endif %}
+        </div>
+
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}

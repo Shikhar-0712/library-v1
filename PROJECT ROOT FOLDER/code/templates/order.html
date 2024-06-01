@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+<a href="/"><input type="submit" value="Home"></a>
+
+<h2>Issued : Issue_id is #madproj_{{issue.id}}</h2>
+
+{% endblock content %}

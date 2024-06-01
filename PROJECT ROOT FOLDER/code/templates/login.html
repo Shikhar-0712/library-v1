@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block link_css %}
+<link rel="stylesheet" href="{{url_for('static' , filename='auth.css')}}">
+{% endblock link_css %}
+
+{% block content %}
+<form action="/login" method="POST">
+    <label for="email"> Email :</label>
+    <input type="email" name="email" id="email">
+    <label for="password"> Password :</label>
+    <input type="password" name="password" id="password">
+    <input class="button" type="submit" value="Login">
+</form>
+
+{% endblock content %}

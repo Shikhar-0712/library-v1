@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+
+{% if update_type=='book' %}
+<h2>Edit Book</h2>
+<form action="/edit_book/{{book.id}}" method="POST">
+    <label for="book">Book name:</label>
+    <input type="text" value="{{book.name}}" name="book" id="book">
+    <label for="content">Content:</label>
+    <input type="text" value="{{book.content}}" name="content" id="content">
+    <label for="author">Author:</label>
+    <input type="text" value="{{book.author}}" name="author" id="author">
+    <label for="section" id="section">Section:</label>
+    <select name="section" id="section">
+        {% for section in sections %}
+        <option value="{{section.id}}" {% if section.id==book.section.id %} selected {% endif %}>{{section.name}}
+        </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Edit Book">
+</form>
+{% else %}
+<h2>Edit Section</h2>
+<form action="/edit_section/{{section.id}}" method="POST">
+    <label for="section">Section name:</label>
+    <input type="text" value="{{section.name}}" name="section" id="section">
+    <label for="description">Description:</label>
+    <input type="text" value="{{section.description}}" name="description" id="description">
+    <input type="submit" value="Edit Section">
+</form>
+
+{% endif %}
+
+{% endblock content %}

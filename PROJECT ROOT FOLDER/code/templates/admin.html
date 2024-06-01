@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+
+<h1>Welcome to Admin Dashboard: {{ session.get('user')['name'] }}</h1>
+<a href="/issued"><input type="submit" value="Issued"></a>
+<a href="/logout"><input type="submit" value="Logout"></a>
+<a href="/history"><input type="submit" value="History"></a>
+
+<h2>ADD SECTION</h2>
+<form action="/add_section" method="POST">
+    <label for="section">Section name:</label>
+    <input type="text" name="section" id="section">
+    <label for="description">Description:</label>
+    <input type="text" name="description" id="description">
+    <input type="submit" value="Add Section">
+</form>
+<h2>ADD PRODUCT</h2>
+<form action="/add_book" method="POST">
+    <label for="book">Book name:</label>
+    <input type="text" name="book" id="book">
+    <label for="content">Content:</label>
+    <input type="text" name="content" id="content">
+    <label for="author">Author:</label>
+    <input type="text" name="author" id="author">
+    <label for="section">Section:</label>
+    <select name="section" id="section">
+        {% for section in sections %}
+        <option value="{{section.id}}">{{section.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Add Book">
+</form>
+
+<h2>Sections with Books</h2>
+<table>
+    <tr>
+        <th>Sections</th>
+        <th>Books</th>
+    </tr>
+    {% for section in sections%}
+    <tr>
+        <td>{{section.name}}
+            <form action="/delete_section" method="POST"><input type="hidden" name="section_id"
+                    value="{{section.id}}"><input type="submit" value="Delete"></form>
+            <a href="/edit_section/{{section.id}}"><input type="submit" value="Edit"></a>
+        </td>
+        <td>
+            {% for book in section.books %}
+            <p>{{book.name}}</p>
+            <form action="/delete_book" method="POST"><input type="hidden" name="book" value="{{book.id}}"><input
+                    type="submit" value="Delete"></form>
+            <a href="/edit_book/{{book.id}}"><input type="submit" value="Edit"></a>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock content %}
